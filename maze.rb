@@ -8,14 +8,46 @@ MAZE = [
 ].freeze
 
 class Pathfinder
+  def check_surrounding(row, col, maze) # check to see if any of the surrounding positions are the x
+    # check left
+    if maze[row][col-1] == 'x'
+      return 'left'
+    # check right
+    elsif maze[row][col+1] == 'x'
+      return 'right'
+    # check down
+    elsif row+1 <= maze[row].length() && maze[row+1][col] == 'x'
+      return 'down'
+    # check up
+    elsif maze[row-1][col] == 'x'
+      return 'up'
+    end
+
+  end
+
   def perform(maze)
     moves = 0 # keep track of the number of moves
     row, col = 1, 0 # start at the first 1
     # position either '0' (bad) '1' (movable space) or 'x' (exit)
     curr = maze[row][col] # current value
     while curr != 'x' do
+      # each iteration, first check if any of the surrounding points are the x
+      case check_surrounding(row, col, maze)
+      when 'left'
+        col -= 1
+        curr = maze[row][col]
+      when 'right'
+        col += 1
+        curr = maze[row][col]
+      when 'down'
+        row -= 1
+        curr = maze[row][col]
+      when 'up'
+        row += 1
+        curr = maze[row][col]
+      end
       # check down
-      if row+1 <= maze[row].length() and maze[row+1][col] == 1 and maze[row][col+1] != 'x'
+      if row+1 <= maze[row].length() && maze[row+1][col] == 1 #&& maze[row][col+1] != 'x'
         moves += 1
         row += 1
         last = 'down'
