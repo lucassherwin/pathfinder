@@ -29,16 +29,25 @@ MAZE4 = [
   [0,   0,  0,  0,  0],
   [1,   0,  0,  0,  0],
   [1,   0,  0,  0,  0],
-  [1,   1,  0,  0,  0],
+  [1,   1,  1,  1,  0],
   [0,   1,  0,  1,'x'],
   [0,   1,  1,  1,  0]
 ].freeze
 
+MAZE5 = [ # no solution maze
+  [0,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   1,  0,  0,  1],
+  [0,   1,  0,  1,  1],
+  [0,   1,  1,  1,  0]
+].freeze
 
 class Pathfinder
   def initialize(maze)
     @maze = maze
     @moves = 0
+    @found = false
   end
 
   def perform
@@ -81,13 +90,10 @@ class Pathfinder
   end
 
   def perform_recursive
-
     def traverse(row, col)
-      # puts @maze[row][col]
       if @maze[row][col] == 'x' # we found the exit
+        @found = true
         puts @moves
-      # elsif @moves > @maze.length() * @maze[0].length()
-      #   puts 'No solution'
       elsif @maze[row][col] == 1 # valid path
         @moves += 1 # only keep track of valid moves
         @maze[row][col] = 2 # to mark that we already visited this point
@@ -105,20 +111,24 @@ class Pathfinder
         end
       end
     end
-    traverse(1,0)
+    traverse(1,0) # hard coded because you must start at a valid point
+    if !@found
+      puts 'no solution'
+    end
   end
 end
 
 # Pathfinder.new(MAZE).perform
-Pathfinder.new(MAZE1).perform_recursive
-Pathfinder.new(MAZE2).perform_recursive
-Pathfinder.new(MAZE3).perform_recursive
-Pathfinder.new(MAZE4).perform_recursive
+# Pathfinder.new(MAZE1).perform_recursive
+# Pathfinder.new(MAZE2).perform_recursive
+# Pathfinder.new(MAZE3).perform_recursive 
+# Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds the longest
+Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
-# 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
 
 # DONE:
 # 1. use recursion instead of a while loop
 # 2. use an initalizer method and pass in the maze on the "new" call
 # 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
+# 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
