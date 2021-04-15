@@ -1,4 +1,4 @@
-MAZE = [
+MAZE1 = [
   [0,   0,  0,  0,  0],
   [1,   1,  1,  0,  0],
   [0,   0,  1,  0,  0],
@@ -7,9 +7,38 @@ MAZE = [
   [0,   1,  1,  1,  0]
 ].freeze
 
+MAZE2 = [
+  [0,   0,  0,  0,  0],
+  [1,   1,  0,  0,  0],
+  [0,   1,  0,  0,  0],
+  [0,   1,  1,  1,  0],
+  [0,   0,  0,  1,  0],
+  [0,   0,  0,  0,  0]
+].freeze
+
+MAZE3 = [
+  [0,   0,  0,  0,  0],
+  [1,   1,  1,  0,  0],
+  [0,   0,  1,  0,  0],
+  [0,   1,  1,  0,  0],
+  [0,   1,  0,  1,'x'],
+  [0,   1,  1,  1,  0]
+].freeze
+
+MAZE4 = [
+  [0,   0,  0,  0,  0],
+  [1,   1,  1,  0,  0],
+  [0,   0,  1,  0,  0],
+  [0,   1,  1,  0,  0],
+  [0,   1,  0,  1,'x'],
+  [0,   1,  1,  1,  0]
+].freeze
+
+
 class Pathfinder
   def initialize(maze)
     @maze = maze
+    @moves = 0
   end
 
   def perform
@@ -52,12 +81,42 @@ class Pathfinder
   end
 
   def perform_recursive
-    maze = @maze
-    puts maze.length
+
+    def traverse(row, col)
+      # puts @maze[row][col]
+      if @maze[row][col] == 'x' # we found the exit
+        puts @moves
+      # elsif @moves > @maze.length() * @maze[0].length()
+      #   puts 'No solution'
+      elsif @maze[row][col] == 1 # valid path
+        @maze[row][col] = 2 # to mark that we already visited this point
+        if row < @maze.length() - 1
+          @moves += 1
+          traverse(row+1, col)
+        end
+        if col < @maze[row].length() - 1
+          @moves += 1
+          traverse(row, col+1)
+        end
+        if row > 0
+          @moves += 1
+          traverse(row-1, col)
+        end
+        if col > 0
+          @moves += 1
+          traverse(row, col-1)
+        end
+      end
+    end
+
+    traverse(1,0)
   end
 end
 
-Pathfinder.new(MAZE).perform_recursive
+# Pathfinder.new(MAZE).perform
+Pathfinder.new(MAZE1).perform_recursive
+# Pathfinder.new(MAZE2).perform_recursive
+
 
 
 # TODO:
