@@ -8,6 +8,10 @@ MAZE = [
 ].freeze
 
 class Pathfinder
+  def initalize(maze)
+    @maze = maze
+  end
+
   def perform(maze)
     moves = 0 # keep track of the number of moves
     row, col = 1, 0 # start at the first 1
@@ -47,4 +51,13 @@ class Pathfinder
   end
 end
 
-Pathfinder.new().perform(MAZE)
+Pathfinder.new(MAZE)
+
+
+# TODO:
+# 1. use recursion instead of a while loop
+# 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
+# 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
+
+# DONE:
+# 2. use an initalizer method and pass in the maze on the "new" call
