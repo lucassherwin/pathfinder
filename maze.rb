@@ -119,10 +119,10 @@ class Pathfinder
 end
 
 # Pathfinder.new(MAZE).perform
-# Pathfinder.new(MAZE1).perform_recursive
-# Pathfinder.new(MAZE2).perform_recursive
-# Pathfinder.new(MAZE3).perform_recursive 
-# Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds the longest
+Pathfinder.new(MAZE1).perform_recursive # 11
+Pathfinder.new(MAZE2).perform_recursive # 7
+Pathfinder.new(MAZE3).perform_recursive # 9
+Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds 9
 Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
