@@ -12,24 +12,24 @@ MAZE2 = [
   [1,   1,  0,  0,  0],
   [0,   1,  0,  0,  0],
   [0,   1,  1,  1,  0],
-  [0,   0,  0,  1,  0],
+  [0,   0,  0,  1,'x'],
   [0,   0,  0,  0,  0]
 ].freeze
 
 MAZE3 = [
-  [0,   0,  0,  0,  0],
-  [1,   1,  1,  0,  0],
-  [0,   0,  1,  0,  0],
-  [0,   1,  1,  0,  0],
-  [0,   1,  0,  1,'x'],
-  [0,   1,  1,  1,  0]
+  [0,   1,  1,  1,  1],
+  [1,   1,  0,  0,  1],
+  [0,   0,  0,  0,  1],
+  [0,   0,  0,  0,  1],
+  [0,   0,  0,  0,'x'],
+  [0,   0,  0,  0,  0]
 ].freeze
 
 MAZE4 = [
   [0,   0,  0,  0,  0],
-  [1,   1,  1,  0,  0],
-  [0,   0,  1,  0,  0],
-  [0,   1,  1,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   1,  0,  0,  0],
   [0,   1,  0,  1,'x'],
   [0,   1,  1,  1,  0]
 ].freeze
@@ -111,14 +111,14 @@ end
 
 # Pathfinder.new(MAZE).perform
 Pathfinder.new(MAZE1).perform_recursive
-# Pathfinder.new(MAZE2).perform_recursive
-
-
+Pathfinder.new(MAZE2).perform_recursive
+Pathfinder.new(MAZE3).perform_recursive
+Pathfinder.new(MAZE4).perform_recursive
 
 # TODO:
-# 1. use recursion instead of a while loop
 # 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
 
 # DONE:
+# 1. use recursion instead of a while loop
 # 2. use an initalizer method and pass in the maze on the "new" call
 # 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
