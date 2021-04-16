@@ -10,6 +10,7 @@ MAZE = [
 class Pathfinder
   def initialize(maze)
     @maze = maze
+    @moves = 0
   end
 
   def perform
@@ -51,9 +52,12 @@ class Pathfinder
     puts moves
   end
 
-  def perform_recursive
-    maze = @maze
-    puts maze.length
+  def perform_recursive(row, col)
+    if @maze[row][col] == 'x'
+      puts @moves
+    elsif @maze[row][col] == 1
+      @maze[row][col] = 2 # so we know we visited that position
+    end
   end
 end
 
