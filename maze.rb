@@ -58,7 +58,7 @@ class Pathfinder
     curr = @maze[row][col] # current value
     while curr != 'x' do
       # check down
-      if row+1 <= @maze[row].length() and @maze[row+1][col] == 1 and @maze[row][col+1] != 'x'
+      if row+1 <= @maze[row].length and @maze[row+1][col] == 1 and @maze[row][col+1] != 'x'
         moves += 1
         row += 1
         last = 'down'
@@ -97,10 +97,10 @@ class Pathfinder
       elsif @maze[row][col] == 1 # valid path
         @moves += 1 # only keep track of valid moves
         @maze[row][col] = 2 # to mark that we already visited this point
-        if row < @maze.length() - 1
+        if row < @maze.length - 1
           traverse(row+1, col)
         end
-        if col < @maze[row].length() - 1
+        if col < @maze[row].length - 1
           traverse(row, col+1)
         end
         if row > 0
@@ -125,8 +125,6 @@ Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
 # 5. get rid of closure - move traverse outside of perform_recursive
-# 6. remvoe () after .length
-# 7. update if !@found to be puts "no solution" unless @found
 # 8. dont hard code starting point
 
 # DONE:
@@ -134,3 +132,5 @@ Pathfinder.new(MAZE5).perform_recursive # no solution
 # 2. use an initalizer method and pass in the maze on the "new" call
 # 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
 # 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
+# 6. remvoe () after .length
+# 7. update if !@found to be puts "no solution" unless @found
