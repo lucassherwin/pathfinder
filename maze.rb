@@ -1,4 +1,4 @@
-MAZE = [
+MAZE1 = [
   [0,   0,  0,  0,  0],
   [1,   1,  1,  0,  0],
   [0,   0,  1,  0,  0],
@@ -7,10 +7,47 @@ MAZE = [
   [0,   1,  1,  1,  0]
 ].freeze
 
+MAZE2 = [
+  [0,   0,  0,  0,  0],
+  [1,   1,  0,  0,  0],
+  [0,   1,  0,  0,  0],
+  [0,   1,  1,  1,  0],
+  [0,   0,  0,  1,'x'],
+  [0,   0,  0,  0,  0]
+].freeze
+
+MAZE3 = [
+  [0,   1,  1,  1,  1],
+  [1,   1,  0,  0,  1],
+  [0,   0,  0,  0,  1],
+  [0,   0,  0,  0,  1],
+  [0,   0,  0,  0,'x'],
+  [0,   0,  0,  0,  0]
+].freeze
+
+MAZE4 = [
+  [0,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   1,  1,  1,  0],
+  [0,   1,  0,  1,'x'],
+  [0,   1,  1,  1,  0]
+].freeze
+
+MAZE5 = [ # no solution maze
+  [0,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   0,  0,  0,  0],
+  [1,   1,  0,  0,  1],
+  [0,   1,  0,  1,  1],
+  [0,   1,  1,  1,  0]
+].freeze
+
 class Pathfinder
   def initialize(maze)
     @maze = maze
     @moves = 0
+    @found = false
   end
 
   def perform
@@ -52,22 +89,46 @@ class Pathfinder
     puts moves
   end
 
-  def perform_recursive(row, col)
-    if @maze[row][col] == 'x'
-      puts @moves
-    elsif @maze[row][col] == 1
-      @maze[row][col] = 2 # so we know we visited that position
+  def perform_recursive
+    def traverse(row, col)
+      if @maze[row][col] == 'x' # we found the exit
+        @found = true
+        puts @moves
+      elsif @maze[row][col] == 1 # valid path
+        @moves += 1 # only keep track of valid moves
+        @maze[row][col] = 2 # to mark that we already visited this point
+        if row < @maze.length() - 1
+          traverse(row+1, col)
+        end
+        if col < @maze[row].length() - 1
+          traverse(row, col+1)
+        end
+        if row > 0
+          traverse(row-1, col)
+        end
+        if col > 0
+          traverse(row, col-1)
+        end
+      end
+    end
+    traverse(1,0) # hard coded because you must start at a valid point
+    if !@found
+      puts 'no solution'
     end
   end
 end
 
-Pathfinder.new(MAZE).perform_recursive
-
+# Pathfinder.new(MAZE).perform
+Pathfinder.new(MAZE1).perform_recursive # 11
+Pathfinder.new(MAZE2).perform_recursive # 7
+Pathfinder.new(MAZE3).perform_recursive # 9
+Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds 9
+Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
-# 1. use recursion instead of a while loop
-# 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
 
 # DONE:
+# 1. use recursion instead of a while loop
 # 2. use an initalizer method and pass in the maze on the "new" call
 # 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
+# 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
