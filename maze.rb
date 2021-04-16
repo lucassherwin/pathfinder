@@ -112,9 +112,7 @@ class Pathfinder
       end
     end
     traverse(1,0) # hard coded because you must start at a valid point
-    if !@found
-      puts 'no solution'
-    end
+    puts 'no solution' unless @found
   end
 end
 
@@ -126,6 +124,10 @@ Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 
 Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
+# 5. get rid of closure - move traverse outside of perform_recursive
+# 6. remvoe () after .length
+# 7. update if !@found to be puts "no solution" unless @found
+# 8. dont hard code starting point
 
 # DONE:
 # 1. use recursion instead of a while loop
