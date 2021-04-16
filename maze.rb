@@ -89,28 +89,29 @@ class Pathfinder
     puts moves
   end
 
-  def perform_recursive
-    def traverse(row, col)
-      if @maze[row][col] == 'x' # we found the exit
-        @found = true
-        puts @moves
-      elsif @maze[row][col] == 1 # valid path
-        @moves += 1 # only keep track of valid moves
-        @maze[row][col] = 2 # to mark that we already visited this point
-        if row < @maze.length - 1
-          traverse(row+1, col)
-        end
-        if col < @maze[row].length - 1
-          traverse(row, col+1)
-        end
-        if row > 0
-          traverse(row-1, col)
-        end
-        if col > 0
-          traverse(row, col-1)
-        end
+  def traverse(row, col)
+    if @maze[row][col] == 'x' # we found the exit
+      @found = true
+      puts @moves
+    elsif @maze[row][col] == 1 # valid path
+      @moves += 1 # only keep track of valid moves
+      @maze[row][col] = 2 # to mark that we already visited this point
+      if row < @maze.length - 1
+        traverse(row+1, col)
+      end
+      if col < @maze[row].length - 1
+        traverse(row, col+1)
+      end
+      if row > 0
+        traverse(row-1, col)
+      end
+      if col > 0
+        traverse(row, col-1)
       end
     end
+  end
+
+  def perform_recursive
     traverse(1,0) # hard coded because you must start at a valid point
     puts 'no solution' unless @found
   end
@@ -124,7 +125,6 @@ Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 
 Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
-# 5. get rid of closure - move traverse outside of perform_recursive
 # 8. dont hard code starting point
 
 # DONE:
@@ -132,5 +132,6 @@ Pathfinder.new(MAZE5).perform_recursive # no solution
 # 2. use an initalizer method and pass in the maze on the "new" call
 # 3. set a class instance variable equal to the passed in maze. Pass in 0 arguments to the perform method
 # 4. create logic such that any 2d array maze will either find x and log out the moves or log out "no solution"
+# 5. get rid of closure - move traverse outside of perform_recursive
 # 6. remvoe () after .length
 # 7. update if !@found to be puts "no solution" unless @found
