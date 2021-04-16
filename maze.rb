@@ -1,4 +1,4 @@
-MAZE1 = [
+MAZE1 = [ # original
   [0,   0,  0,  0,  0],
   [1,   1,  1,  0,  0],
   [0,   0,  1,  0,  0],
@@ -7,16 +7,16 @@ MAZE1 = [
   [0,   1,  1,  1,  0]
 ].freeze
 
-MAZE2 = [
+MAZE2 = [ # starts on the right side
   [0,   0,  0,  0,  0],
-  [1,   1,  0,  0,  0],
+  [0,   1,  1,  1,  1],
   [0,   1,  0,  0,  0],
   [0,   1,  1,  1,  0],
   [0,   0,  0,  1,'x'],
   [0,   0,  0,  0,  0]
 ].freeze
 
-MAZE3 = [
+MAZE3 = [ # different pattern
   [0,   1,  1,  1,  1],
   [1,   1,  0,  0,  1],
   [0,   0,  0,  0,  1],
@@ -25,7 +25,7 @@ MAZE3 = [
   [0,   0,  0,  0,  0]
 ].freeze
 
-MAZE4 = [
+MAZE4 = [ # 2 possible routes
   [0,   0,  0,  0,  0],
   [1,   0,  0,  0,  0],
   [1,   0,  0,  0,  0],
@@ -111,18 +111,56 @@ class Pathfinder
     end
   end
 
+  def find_starting_point # returns an array with the starting point
+    # this function assumes that the starting point must be on one of the outer edges
+    row, col = 0, 0
+
+    # left edge
+    if row == 0
+      @maze.each_with_index do |r, i| # r is the whole row i is the index
+        if r[0] == 1
+          row = i
+        end
+      end
+    end
+
+    # right edge -- not found on the left
+    if row == 0
+      @maze.each_with_index do |r, i| # r is the whole row i is the index
+        if r[r.length - 1] == 1
+          row = i
+        end
+      end
+    end
+
+    # top edge -- not found on left or right
+    if col == 0
+      @maze[0].each_with_index do |col, i| 
+        puts
+      end
+    end
+
+    puts row
+
+
+    # return [row, col]
+  end
+
   def perform_recursive
-    traverse(1,0) # hard coded because you must start at a valid point
-    puts 'no solution' unless @found
+    # traverse(1,0) # hard coded because you must start at a valid point
+    # row, col = find_starting_point[0], find_starting_point[1]
+    find_starting_point
+    # puts row, col
+    # puts 'no solution' unless @found
   end
 end
 
 # Pathfinder.new(MAZE).perform
-Pathfinder.new(MAZE1).perform_recursive # 11
+# Pathfinder.new(MAZE1).perform_recursive # 11
 Pathfinder.new(MAZE2).perform_recursive # 7
-Pathfinder.new(MAZE3).perform_recursive # 9
-Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds 9
-Pathfinder.new(MAZE5).perform_recursive # no solution
+# Pathfinder.new(MAZE3).perform_recursive # 9
+# Pathfinder.new(MAZE4).perform_recursive # two solutions one is 9 moves one is 7 -- only finds 9
+# Pathfinder.new(MAZE5).perform_recursive # no solution
 
 # TODO:
 # 8. dont hard code starting point
